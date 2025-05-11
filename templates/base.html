@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <title>배고파융융</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+  </head>
+  <body>
+    <div class="container">
+      {% if session.get('user_id') %}
+
+      <div
+        style="
+          display: flex;
+          flex-direction: row;
+          justify-content: end;
+          gap: 10px;
+        "
+      >
+        <div>{{ session.get('username') }}님, 환영합니다!</div>
+        <div class="logout"><a href="{{ url_for('logout') }}">로그아웃</a></div>
+      </div>
+      {% endif %} {% with messages = get_flashed_messages() %} {% if messages %}
+      <ul class="flashes">
+        {% for msg in messages %}
+        <li>{{ msg }}</li>
+        {% endfor %}
+      </ul>
+      {% endif %} {% endwith %} {% block content %}{% endblock %}
+    </div>
+  </body>
+</html>

@@ -1,0 +1,241 @@
+/* 색상 변수 (CSS 변수) 정의 */
+:root {
+  --bg-color: #cbe8ff; /* 연한 파랑 (배경색) */
+  --primary-color: #7bb3d7; /* 기본 진한 파랑 (헤더, 보드 배경) */
+  --accent-color: #4f93c6; /* 강조 파랑 (버튼 등) */
+  --light-color: #e9f5ff; /* 매우 연한 파랑 (리스트 아이템 배경) */
+}
+
+/* 전체 페이지 기본 스타일 */
+body {
+  margin: 0;
+  font-family: "Segoe UI", Tahoma, sans-serif;
+  background-color: var(--bg-color);
+}
+.container {
+  width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+/* 플래시 메시지 스타일 */
+.flashes {
+  list-style: none;
+  padding: 0;
+  margin: 10px 0;
+  color: red;
+}
+.flashes li {
+  margin-bottom: 5px;
+}
+/* 로그아웃 링크 위치 */
+.logout {
+  text-align: right;
+  margin-bottom: 10px;
+}
+.logout a {
+  color: #333;
+  text-decoration: none;
+}
+
+/* 헤더 스타일 (h1, h2 등) */
+h1,
+h2,
+h3,
+h4 {
+  background-color: var(--primary-color);
+  color: white;
+  padding: 10px;
+  margin-top: 0;
+}
+/* 메인 페이지 구성 */
+.main-content {
+  display: flex;
+}
+.board-links {
+  flex: 3;
+}
+.login-form {
+  flex: 1;
+  margin-left: 20px;
+}
+.board {
+  background-color: var(--primary-color);
+  text-align: center;
+  padding: 20px;
+  margin-bottom: 10px;
+}
+.board a {
+  color: white;
+  text-decoration: none;
+  display: block;
+  font-size: 1.1em;
+}
+.login-form {
+  background-color: var(--primary-color);
+  color: white;
+  padding: 15px;
+}
+.login-form h3 {
+  margin-top: 0;
+}
+.login-form label {
+  display: block;
+  margin: 5px 0;
+}
+.login-form input {
+  width: 100%;
+  padding: 5px;
+  margin-bottom: 10px;
+  border: none;
+}
+.login-form button {
+  width: 100%;
+  padding: 8px;
+  background-color: var(--accent-color);
+  border: none;
+  color: white;
+  font-size: 1em;
+  cursor: pointer;
+}
+.register-link {
+  text-align: right;
+  margin-top: 5px;
+}
+.register-link a {
+  color: #eef;
+  font-size: 0.9em;
+  text-decoration: none;
+}
+
+/* 검색 바와 정렬 버튼 */
+.search-bar {
+  margin: 10px 0;
+  text-align: center;
+}
+.search-bar input[type="text"] {
+  width: 200px;
+  padding: 5px;
+}
+.search-bar button {
+  padding: 5px 10px;
+  background-color: var(--accent-color);
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+.sort-btn {
+  float: right;
+  background-color: var(--accent-color);
+  color: white;
+  padding: 5px 10px;
+  text-decoration: none;
+  margin: -5px 5px 0 0;
+  font-size: 0.9em;
+  border-radius: 3px;
+}
+
+/* 식당 목록 스타일 */
+.restaurant-list {
+  margin-top: 5px;
+}
+.restaurant-item {
+  background-color: var(--light-color);
+  padding: 10px;
+  margin: 5px 0;
+}
+.restaurant-item a {
+  text-decoration: none;
+  color: #000;
+  font-weight: bold;
+}
+.list-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 10px;
+}
+.pager {
+  color: #555;
+}
+.btn {
+  background-color: var(--accent-color);
+  color: white;
+  text-decoration: none;
+  padding: 8px 12px;
+  border-radius: 3px;
+}
+
+/* 식당 상세 페이지 스타일 */
+.restaurant-info p {
+  background-color: var(--light-color);
+  padding: 8px;
+  margin: 5px 0;
+}
+.reviews {
+  margin: 10px 0;
+}
+.review {
+  background-color: var(--light-color);
+  padding: 10px;
+  margin-bottom: 10px;
+}
+.review-author {
+  font-weight: bold;
+}
+.review-rating {
+  font-weight: bold;
+  color: #333;
+}
+.review-comment {
+  margin: 5px 0;
+}
+.review-date {
+  font-size: 0.9em;
+  color: #555;
+}
+.review-form {
+  background-color: var(--primary-color);
+  color: white;
+  padding: 10px;
+}
+.review-form label {
+  font-weight: bold;
+}
+.review-form textarea,
+.review-form select {
+  width: 100%;
+  margin: 5px 0 10px 0;
+  padding: 5px;
+  border: none;
+}
+.review-form button {
+  background-color: var(--accent-color);
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  cursor: pointer;
+}
+
+/* 회원가입 및 식당 등록 폼 스타일 재사용 */
+.register-form div,
+.restaurant-form div {
+  margin-bottom: 10px;
+}
+.register-form label,
+.restaurant-form label {
+  display: inline-block;
+  width: 100px;
+}
+.register-form input,
+.restaurant-form input {
+  padding: 5px;
+  width: 200px;
+}
+.register-form button,
+.restaurant-form button {
+  padding: 8px 16px;
+  background-color: var(--accent-color);
+  color: white;
+  border: none;
+  cursor: pointer;
+}

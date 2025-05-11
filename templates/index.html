@@ -1,0 +1,48 @@
+{% extends "base.html" %} {% block content %}
+<h1>배고파융...</h1>
+<div class="main-content">
+  <div class="board-links">
+    <div class="board">
+      <a
+        href="{{ url_for('list_restaurants', 
+                      board='cafe')}}"
+        >CAFE 게시판</a
+      >
+    </div>
+    <div class="board">
+      <a
+        href="{{ url_for('list_restaurants', 
+              board='restaurant')}}"
+        >식당 게시판</a
+      >
+    </div>
+    <div class="board">
+      <a
+        href="{{ url_for('list_restaurants', 
+                board='free') }}"
+        >자유 게시판</a
+      >
+    </div>
+  </div>
+
+  {% if not session.get('user_id') %}
+  <div class="login-form">
+    <form action="{{ url_for('index') }}" method="post">
+      <h3>로그인</h3>
+      <div>
+        <label for="username">ID</label>
+        <input type="text" name="username" id="username" required />
+      </div>
+      <div>
+        <label for="password">PASSWORD</label>
+        <input type="password" name="password" id="password" required />
+      </div>
+      <button type="submit">로그인</button>
+      <div class="register-link">
+        <a href="{{ url_for('register') }}">회원가입</a>
+      </div>
+    </form>
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

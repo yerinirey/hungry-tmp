@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+{% block content %}
+  <h2>{{board}} 게시판</h2>
+
+  <div class="search-bar">
+    <form method="get" action="{{ url_for('list_restaurants', board=board) }}">
+      <input
+        type="text"
+        name="q"
+        placeholder="검색어 입력"
+        value="{{ search_query }}"
+      />
+      <button type="submit">검색</button>
+      <label for="sort-select">정렬:</label>
+      <select name="sort" id="sort-select" onchange="this.form.submit()">
+        <option value="" {% if sort_option != 'rating' %}selected{% endif %}>
+          이름순
+        </option>
+        <option value="rating" {% if sort_option == 'rating' %} selected {% endif %}>
+          평점순
+        </option>
+      </select>
+
+      
+    </form>
+  </div>
+
+  <div class="restaurant-list">
+    {% for rest in restaurants %}
+      <div class="restaurant-item">
+        {{ loop.index }}.
+        <a href="{{ url_for('restaurant_reviews', board=board, rest_id=rest.id) }}">
+          {{ rest.name }}
+        </a>
+      </div>
+    {% else %}
+      <p>등록된 식당이 없습니다.</p>
+    {% endfor %}
+  </div>
+
+  <div class="list-footer">
+    <div class="pager">1 2 3 ... 미구현</div>
+   
+  </div>
+{% endblock %}
