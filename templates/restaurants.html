@@ -27,11 +27,14 @@
 
   <div class="restaurant-list">
     {% for rest in restaurants %}
-      <div class="restaurant-item">
+      <div class="restaurant-item" style="display:flex; flex-direction:row; justify-content: space-between;">
+        <div>
         {{ loop.index }}.
         <a href="{{ url_for('restaurant_reviews', board=board, rest_id=rest.id) }}">
           {{ rest.name }}
         </a>
+      </div>
+        <span>★{{rest.avg_rating}}</span>
       </div>
     {% else %}
       <p>등록된 식당이 없습니다.</p>

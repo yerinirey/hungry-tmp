@@ -16,12 +16,15 @@
         style="
           display: flex;
           flex-direction: row;
-          justify-content: end;
+          justify-content: space-between;
           gap: 10px;
         "
       >
-        <div>{{ session.get('username') }}님, 환영합니다!</div>
-        <div class="logout"><a href="{{ url_for('logout') }}">로그아웃</a></div>
+        <span><a href="{{url_for('index')}}">HOME</a></span>
+        <div style="display: flew; flex-direction: row;">
+          <div>{{ session.get('username') }}님, 환영합니다!</div>
+          <div class="logout"><a href="{{ url_for('logout') }}">로그아웃</a></div>
+        </div>
       </div>
       {% endif %} {% with messages = get_flashed_messages() %} {% if messages %}
       <ul class="flashes">

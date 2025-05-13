@@ -4,10 +4,10 @@ from sqlalchemy.orm import sessionmaker, scoped_session, joinedload
 from models import Base, User, Restaurant, Review, ReviewComment
 from config import Config
 from naver import fetch_from_naver
-
+from utils import render_stars
 app = Flask(__name__)
 app.config.from_object(Config)
-
+app.jinja_env.filters['stars'] = render_stars
 # DB 없으면 생성, id:root / pwd:1234 로 지정해둔 상태. .
 pre_engine = create_engine('mysql+pymysql://root:1234@localhost/')
 with pre_engine.connect() as conn:
@@ -245,6 +245,29 @@ def add_comment(review_id):
     db.close()
 
     flash('댓글이 등록되었습니다.')
+    return redirect(request.referrer or url_for('index'))
+
+@app.route('/comment/delete/<int:comment_id>', methods=['POST'])
+@login_required
+def delete_comment(comment_id):
+    db = SessionLocal()
+    comment = db.query(ReviewComment).get(comment_id)
+
+    if not comment:
+        db.close()
+        flash("에러")
+        return redirect(request.referrer or url_for('index'))
+    
+    if comment.user_id != session['user_id']:
+        db.close()
+        flash("에러: 권한")
+        return redirect(request.referrer or url_for('index'))
+    
+    db.delete(comment)
+    db.commit()
+    db.close()
+
+    flash('댓글이 성공적으로 삭제되었습니다.')
     return redirect(request.referrer or url_for('index'))
 
 

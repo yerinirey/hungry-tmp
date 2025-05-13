@@ -13,24 +13,36 @@
   <div class="review">
     <p>
       <!-- rev.user_id 를 통해 username을 가져올 방법이 없나? -> reference가 여기서 쓰일 수 있다 -->
-      <span class="review-author">{{ rev.user.username }}</span> - 평점:
-      <span class="review-rating">{{ rev.rating }}</span>
+      <span class="review-author">{{ rev.user.username }}</span>
     </p>
+    <span class="review-rating">{{ rev.rating|stars }}</span>
     <p class="review-comment">{{ rev.comment }}</p>
     <p class="review-date">{{ rev.created_at.strftime("%Y-%m-%d %H:%M") }}</p>
+    <br/>
     <div class="review-comments">
       <h5>댓글</h5>
       {% if rev.comments %}
         {% for comment in rev.comments %}
-        <div class="comment">
-          <p>
-            <strong>{{ comment.user.username}}</strong>:
-            {{comment.comment}}
-            <small class="comment-date">
-              ({{comment.created_at.strftime("%Y-%m-%d %H:%M")}})
-            </small>
-          </p>
-        </div>
+          <div class="comment" style="display: flex; flex-direction: row;justify-content: space-between; margin: 30px 0">
+            <div>
+            <span style="font-weight:bold">{{ comment.user.username}}</span>:
+            <span>{{comment.comment}}</span>
+            
+          </div>
+          <div>
+          <span class="comment-date">
+            ({{comment.created_at.strftime("%Y-%m-%d %H:%M")}})
+          </span>
+            {% if session['user_id'] == comment.user_id %}
+            <form action="{{url_for('delete_comment', comment_id=comment.id)}}"
+                  method="post"
+                  style="display:inline;">
+                  <button type="submit" style="border:none; background:none; color:red; cursor:pointer;">X</button>
+            </form>
+            {% endif %}
+          </div>
+          </div>
+        
         {% endfor %}
       {% else %}
         <p>댓글을 작성해보세요..</p>
