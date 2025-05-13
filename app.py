@@ -26,6 +26,9 @@ SessionLocal = scoped_session(
 Base.metadata.create_all(engine)
 
 
+@app.route('/favicon.ico')
+def favicon():
+    return '', 204  # 아무 응답도 없이 처리 (No Content): 에러 임시방편
 
 
 # 로그인 확인
