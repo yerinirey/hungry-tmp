@@ -1,6 +1,6 @@
 from sqlalchemy import (
     Column, Integer, String, Float, DateTime, Text,
-    ForeignKey, CheckConstraint, func, create_engine
+    ForeignKey, CheckConstraint, func
 )
 from sqlalchemy.orm import relationship, declarative_base
 # from sqlalchemy.ext.declarative import declarative_base -> 1.3버전 이전까지 import위치, 사용은 무관
@@ -40,3 +40,14 @@ class Review(Base):
     # ORM 편의부분
     user       = relationship(User, backref='reviews')
     # restaurant = relationship(Restaurant, backref='reviews')
+
+class ReviewComment(Base):
+    __tablename__ = 'review_comments'
+    id            = Column(Integer, primary_key = True)
+    review_id     = Column(Integer, ForeignKey('reviews.id'), nullable = False)
+    user_id       = Column(Integer, ForeignKey('users.id'), nullable = False)
+    comment       = Column(Text)
+    created_at    = Column(DateTime, server_default=func.now())
+
+    review = relationship("Review", backref='comments')
+    user   = relationship(User, backref='review_comments')

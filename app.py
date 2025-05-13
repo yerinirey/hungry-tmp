@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, session, flash
 from sqlalchemy import create_engine, text
 from sqlalchemy.orm import sessionmaker, scoped_session, joinedload
-from models import Base, User, Restaurant, Review
+from models import Base, User, Restaurant, Review, ReviewComment
 from config import Config
 from naver import fetch_from_naver
 
@@ -147,7 +147,8 @@ def restaurant_reviews(board, rest_id):
     
     # eager loading: db.close이전에 필요한 내역 가져오기
     reviews = db.query(Review)\
-                .options(joinedload(Review.user))\
+                .options(joinedload(Review.user),
+                         joinedload(Review.comments).joinedload(ReviewComment.user))\
                 .filter_by(restaurant_id=rest_id)\
                 .order_by(Review.created_at.desc())\
                 .all()
@@ -219,6 +220,33 @@ def add_review(board, rest_id):
 
     flash('후기를 등록했습니다.')
     return redirect(url_for('restaurant_reviews', board=board, rest_id=rest_id))
+
+@app.route('/comment/<int:review_id>', methods=['POST'])
+@login_required
+def add_comment(review_id):
+    comment_text = request.form.get("comment", "").strip()
+    if not comment_text:
+        flash("댓글 내용을 작성해주세요")
+        return redirect(request.referrer or url_for('index'))
+    
+    db = SessionLocal()
+    review = db.query(Review).get(review_id)
+    if not review:
+        db.close()
+        return "REV Not Found", 404
+    
+    new_comment = ReviewComment(
+        review_id = review_id,
+        user_id = session['user_id'],
+        comment = comment_text
+    )
+    db.add(new_comment)
+    db.commit()
+    db.close()
+
+    flash('댓글이 등록되었습니다.')
+    return redirect(request.referrer or url_for('index'))
+
 
 if __name__ == '__main__':
     app.run(debug=True)

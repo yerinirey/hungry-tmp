@@ -18,6 +18,37 @@
     </p>
     <p class="review-comment">{{ rev.comment }}</p>
     <p class="review-date">{{ rev.created_at.strftime("%Y-%m-%d %H:%M") }}</p>
+    <div class="review-comments">
+      <h5>댓글</h5>
+      {% if rev.comments %}
+        {% for comment in rev.comments %}
+        <div class="comment">
+          <p>
+            <strong>{{ comment.user.username}}</strong>:
+            {{comment.comment}}
+            <small class="comment-date">
+              ({{comment.created_at.strftime("%Y-%m-%d %H:%M")}})
+            </small>
+          </p>
+        </div>
+        {% endfor %}
+      {% else %}
+        <p>댓글을 작성해보세요..</p>
+      {% endif %}
+    </div>
+    <div class="comment-form">
+      <form action="{{url_for('add_comment', review_id=rev.id)}}"method="post">
+        <textarea
+          name="comment"
+          placeholder="댓글 내용"
+          rows="2"
+          style="width: 100%"
+          required></textarea>
+          <br/>
+          <button type = "submit">댓글 작성</button>
+
+    </form>
+    </div>
   </div>
   {% endfor %} {% else %}
   <p>등록된 후기가 없습니다.</p>
@@ -37,7 +68,7 @@
       {% endfor %}
     </select>
     <br />
-    <label for="comment">댓글:</label>
+    <label for="comment">내용:</label>
     <textarea name="comment" id="comment" rows="3" required></textarea>
     <br />
     <button type="submit">등록</button>

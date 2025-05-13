@@ -38,4 +38,16 @@ CREATE TABLE reviews (
     FOREIGN KEY (user_id) REFERENCES users(id),
 );
 
+-- 댓글 테이블
+CREATE TABLE review_comments (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    review_id INT NOT NULL,
+    user_id INT NOT NULL,
+    comment TEXT NOT NULL,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    -- ON DELETE CASCADE: 리뷰 혹은 유저 삭제 시 관련 댓글 삭제
+    FOREIGN KEY (review_id) REFERENCES reviews(id) ON DELETE CASCADE,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+)
+
 COMMIT;
