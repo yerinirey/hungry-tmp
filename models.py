@@ -38,5 +38,5 @@ class Review(Base):
         CheckConstraint('rating BETWEEN 1 AND 5', name='rating_range_chk'),
     )
     # ORM 편의부분
-    # user       = relationship(User, backref='reviews')
+    user       = relationship(User, backref='reviews')
     # restaurant = relationship(Restaurant, backref='reviews')

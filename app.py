@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect, url_for, session, flash
 from sqlalchemy import create_engine, text
-from sqlalchemy.orm import sessionmaker, scoped_session
+from sqlalchemy.orm import sessionmaker, scoped_session, joinedload
 from models import Base, User, Restaurant, Review
 from config import Config
 from naver import fetch_from_naver
@@ -144,7 +144,10 @@ def restaurant_reviews(board, rest_id):
     if not restaurant:
         db.close()
         return "Not Found", 404    
+    
+    # eager loading: db.close이전에 필요한 내역 가져오기
     reviews = db.query(Review)\
+                .options(joinedload(Review.user))\
                 .filter_by(restaurant_id=rest_id)\
                 .order_by(Review.created_at.desc())\
                 .all()

@@ -12,8 +12,9 @@
   {% if reviews %} {% for rev in reviews %}
   <div class="review">
     <p>
+      <!-- rev.user_id 를 통해 username을 가져올 방법이 없나? -> reference가 여기서 쓰일 수 있다 -->
       <span class="review-author">{{ rev.user.username }}</span> - 평점:
-      <span class="review-rating">{{ rev.rating }}</span>/5
+      <span class="review-rating">{{ rev.rating }}</span>
     </p>
     <p class="review-comment">{{ rev.comment }}</p>
     <p class="review-date">{{ rev.created_at.strftime("%Y-%m-%d %H:%M") }}</p>
@@ -22,7 +23,7 @@
   <p>등록된 후기가 없습니다.</p>
   {% endif %}
 </div>
-<!-- 후기 작성 폼 -->
+<!-- 후기 작성 폼 => 페이지를 나누어야 할 듯 -->
 <div class="review-form">
   <h4>후기 작성</h4>
   <form
